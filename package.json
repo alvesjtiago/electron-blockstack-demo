@@ -27,24 +27,6 @@
                     "deb",
                     "rpm"
                 ]
-            },
-            "electronPackagerConfig": {
-                "packageManager": "yarn",
-                "protocol": ["electronblockstackdemo"],
-                "protocolName": ["electronblockstackdemo"]
-            },
-            "electronWinstallerConfig": {
-                "name": "electron_blockstack_demo"
-            },
-            "electronInstallerDebian": {},
-            "electronInstallerRedhat": {},
-            "github_repository": {
-                "owner": "",
-                "name": ""
-            },
-            "windowsStoreConfig": {
-                "packageName": "",
-                "name": "electronblockstackdemo"
             }
         }
     },

@@ -2,7 +2,12 @@ import * as blockstack from 'blockstack';
 import { ipcRenderer } from 'electron';
 
 document.getElementById('signin-button').addEventListener('click', function () {
-  var authRequest = blockstack.makeAuthRequest(blockstack.generateAndStoreTransitKey(), 'electronblockstackdemo://auth', 'http://localhost:9876/manifest.json', blockstack.DEFAULT_SCOPE, 'electronblockstackdemo://auth')
+  const transitPrivateKey = blockstack.generateAndStoreTransitKey()
+  const redirectURI = 'http://localhost:9876/callback'
+  const manifestURI = 'http://localhost:9876/manifest.json'
+  const scopes = blockstack.DEFAULT_SCOPE
+  const appDomain = 'http://localhost:9876'
+  var authRequest = blockstack.makeAuthRequest(transitPrivateKey, redirectURI, manifestURI, scopes, appDomain)
   blockstack.redirectToSignInWithAuthRequest(authRequest)
 })
 

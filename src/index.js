@@ -11,8 +11,9 @@ app.on('will-quit', () => {
   server.send('quit');
 });
 
-// Set default protocol client for redirect
-app.setAsDefaultProtocolClient('electronblockstackdemo');
+server.on('message', (m) => {
+  authCallback(m.authResponse)
+});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -50,16 +51,11 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-app.on('open-url', function (ev, url) {
-  ev.preventDefault();
-  
+function authCallback(authResponse) {
   // Bring app window to front
   mainWindow.focus();
 
-  const queryDict = queryString.parse(url);
-  var token = queryDict["electronblockstackdemo://auth?authResponse"] ? queryDict["electronblockstackdemo://auth?authResponse"] : null;
-
-  const tokenPayload = blockstack.decodeToken(token).payload
+  const tokenPayload = blockstack.decodeToken(authResponse).payload
 
   const profileURL = tokenPayload.profile_url
   fetch(profileURL)
@@ -75,8 +71,7 @@ app.on('open-url', function (ev, url) {
         })
       }
     })
-
-});
+};
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
